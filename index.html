@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Detector</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: repeating-linear-gradient(
+        to bottom,
+        #fdfdfd,
+        #fdfdfd 30px,
+        #e0e0e0 31px
+      );
+      background-size: 100% 32px;
+      animation: fadeIn 1s ease-in;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-shadow: 1px 1px 0 white;
+    }
+
+    .translate-container {
+      display: flex;
+      gap: 1.5rem;
+      background: #ffffffdd;
+      padding: 2rem;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      max-width: 900px;
+      width: 100%;
+      flex-wrap: wrap;
+      animation: slideUp 0.8s ease-in-out;
+    }
+
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .box {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    textarea {
+      width: 100%;
+      height: 160px;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 14px;
+      background-color: #fff;
+      resize: none;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      background-color: #007aff;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #005ecb;
+    }
+
+    .output-box {
+      flex: 1 1 300px;
+      padding: 1rem;
+      background-color: #f9f9ff;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      font-size: 1.1rem;
+      min-height: 160px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.04);
+    }
+
+    @media (max-width: 768px) {
+      .translate-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">🌐 Language Detection App</div>
+
+  <div class="translate-container">
+    <div class="box">
+      <textarea id="inputText" placeholder="✏️ Write a sentence to detect its language..."></textarea>
+      <button class="btn" onclick="detectLanguage()">Detect Language</button>
+    </div>
+    <div class="output-box" id="outputBox">
+      📘 Detected language will appear here
+    </div>
+  </div>
+
+  <script>
+    function detectLanguage() {
+      const input = document.getElementById("inputText").value;
+      const output = document.getElementById("outputBox");
+
+      if (input.includes("हूँ") || input.includes("नाम")) {
+        output.textContent = "📘 Detected Language: Hindi";
+      } else if (input.includes("Bonjour")) {
+        output.textContent = "📘 Detected Language: French";
+      } else if (input.includes("Hola")) {
+        output.textContent = "📘 Detected Language: Spanish";
+      } else {
+        output.textContent = "📘 Detected Language: English (default)";
+      }
+    }
+  </script>
+
+</body>
+</html>

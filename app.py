@@ -1,32 +1,28 @@
 import streamlit as st
 import joblib
 
+# Load saved model and vectorizer
+@st.cache_resource
+def load_model():
+    model = joblib.load("language_model.pkl")
+    vectorizer = joblib.load("vectorizer.pkl")
+    return model, vectorizer
 
-model = joblib.load("emotion_model.pkl")            # Trained classifier (e.g., Naive Bayes)
-vectorizer = joblib.load("vectorizer_tfidf.pkl")    # TF-IDF vectorizer
+model, vectorizer = load_model()
 
-def get_emoji(emotion):
-    emojis = {
-        'happy': '😊',
-        'sad': '😢',
-        'anger': '😠',
-        'fear': '😨',
-        'love': '❤️',
-        'surprise': '😲',
-        'neutral': '😐'
-    }
-    return emojis.get(str(emotion).lower(), '❓')
+# App layout
+st.set_page_config(page_title="Language Detector", layout="centered")
+st.title("🌐 Language Detection App")
+st.write("Type any sentence and the model will detect its language.")
 
-# Streamlit UI
-st.set_page_config(page_title="NLP Emotion Detector ", page_icon="🧠", layout="centered")
-st.title("🔍 NLP Emotion Detector by Ayush❤️")
+# User input
+user_input = st.text_area("✍️ Enter your sentence here:", height=150)
 
-text = st.text_area("Enter a message:")
-
-if st.button("Predict"):
-    if text.strip():
-        vector = vectorizer.transform([text])
-        prediction = model.predict(vector)[0]
-        st.success(f"**Emotion:** {prediction} {get_emoji(prediction)}")
+# Prediction
+if st.button("Detect Language"):
+    if user_input.strip() == "":
+        st.warning("Please enter some text.")
     else:
-        st.warning("Please type something.")
+        data = vectorizer.transform([user_input])
+        prediction = model.predict(data)
+        st.success(f"🔤 Detected Language: **{prediction[0]}**")
